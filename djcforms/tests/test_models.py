@@ -4,13 +4,15 @@ from ..models import Question
 
 
 class QuestionTest(TestCase):
+    def setUp(self):
+        self.question = Question()
+
     def test_save_new_question(self):
-        question = Question()
-        question.name = 'favorite_color'
-        question.text = 'What is your favorite color?'
-        question.question_type = 'singlelinetext'
-        question.required = True
-        question.save()
+        self.question.name = 'favorite_color'
+        self.question.text = 'What is your favorite color?'
+        self.question.question_type = 'singlelinetext'
+        self.question.required = True
+        self.question.save()
 
         question = Question.objects.last()
 
@@ -20,10 +22,8 @@ class QuestionTest(TestCase):
         self.assertTrue(question.required)
 
     def test_question_should_have_defined_question_type_choices(self):
-        question = Question()
-
         expected = (
             ('singlelinetext', 'Single Line Text'),
             ('paragraphtext', 'Paragraph Text'),
         )
-        self.assertEqual(question.question_type_choices, expected)
+        self.assertEqual(self.question.question_type_choices, expected)
